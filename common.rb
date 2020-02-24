@@ -29,14 +29,14 @@ end
 
 def create_event_and_artists(venue:, title:, date:, url:, url_hash:, thumbnail:, image:, artists:)
   begin
-    event = Event.create(venue_id: venue.id, title: title, date: date, url: event_url, url_hash: url_hash, thumbnail: thumbnail, image: image)
+    event = Event.create(venue_id: venue.id, title: title, date: date, url: url, url_hash: url_hash, thumbnail: thumbnail, image: image)
     artists.each do |artist_name|
       artist = Artist.find_or_create_by(name: artist_name)
       artist.events << event
     end
   rescue ActiveRecord::ValueTooLong => e
     puts "Venue: #{venue.name}"
-    puts "URL: #{event_url}"
+    puts "URL: #{url}"
     puts e.message
     puts e.backtrace
   end
